@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-
-import 'package:tiket_wisata/presentation/ui/intro/splash_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'core/core.dart';
-
-import 'presentation/bloc/auth_bloc.dart';
-import 'domain/usecase/login_usecase.dart';
-import 'data/repositories/auth_repository_impl.dart';
-import 'data/datasources/auth_remote_datasources.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'core/constants/colors.dart';
+import 'data/datasources/auth_remote_datasources.dart';
+import 'data/datasources/auth_local_datasources.dart'; // ✅
+import 'data/repositories/auth_repository_impl.dart';
+import 'domain/usecase/login_usecase.dart';
+import 'presentation/bloc/auth_bloc.dart';
+import 'presentation/ui/intro/splash_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,21 +25,22 @@ class MyApp extends StatelessWidget {
           create: (_) => AuthBloc(
             LoginUseCase(
               AuthRepositoryImpl(
-                AuthRemoteDatasources(),
+                AuthRemoteDataSource(),
               ),
             ),
+            AuthLocalDataSource(), // ✅ Injected here
           ),
-        )
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Tiket Wisata',
+        title: 'Flutter Intensive Club batch 17',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
-          dialogTheme: const DialogTheme(elevation: 0,), 
+          dialogTheme: const DialogTheme(elevation: 0),
           textTheme: GoogleFonts.outfitTextTheme(
             Theme.of(context).textTheme,
-          ),    
+          ),
           appBarTheme: AppBarTheme(
             color: AppColors.white,
             elevation: 0,
@@ -50,10 +50,10 @@ class MyApp extends StatelessWidget {
               fontWeight: FontWeight.w500,
             ),
             iconTheme: const IconThemeData(
-              color: AppColors.black
+              color: AppColors.black,
             ),
-            centerTitle: true
-          )
+            centerTitle: true,
+          ),
         ),
         home: const SplashPage(),
       ),

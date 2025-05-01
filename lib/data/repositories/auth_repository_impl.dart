@@ -3,7 +3,7 @@ import '../../domain/repositories/auth_repository.dart';
 
 
 class AuthRepositoryImpl implements AuthRepository {
-  final AuthRemoteDatasources remoteDatasource;
+  final AuthRemoteDataSource remoteDatasource;
 
   AuthRepositoryImpl(this.remoteDatasource);
 
